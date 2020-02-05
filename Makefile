@@ -6,7 +6,7 @@
 #    By: aelphias <aelphias@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/12/10 13:58:56 by aelphias          #+#    #+#              #
-#    Updated: 2020/02/01 17:05:45 by aelphias         ###   ########.fr        #
+#    Updated: 2020/02/04 17:04:21 by aelphias         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ SRC =			main.c
 
 OBJ =			$(SRC:.c=.o)
 
-FT_LIB =		libft/libft.a
+FT_LIB =		libft/libft.a minilibx_macos/libmlx.a
 
 FT_PRINT =		ft_printf/libftprintf.a
 

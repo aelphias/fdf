@@ -6,7 +6,7 @@
 /*   By: aelphias <aelphias@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/01 17:46:35 by aelphias          #+#    #+#             */
-/*   Updated: 2020/02/04 16:38:28 by aelphias         ###   ########.fr       */
+/*   Updated: 2020/02/05 19:48:34 by aelphias         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int    get_height(char *filename)
     int     fd;
     int     height;
     char    *line;
-
+ 
     height = 0;
     fd = open(filename, O_RDONLY);
     while (get_next_line(fd, &line))
@@ -68,10 +68,10 @@ void    read_file(char *filename, fdf *data)
     
     data->height = get_height(filename);
     data->width = get_width(filename);
-    data->a_matrix = (int **)malloc(sizeof(int*) * (data->height + 1));
+    data->a_matrix = (int **)ft_memalloc(sizeof(int*) * (data->height)); /* +1 removed*/
     i = 0;
     while (i <= data->height)
-      data->a_matrix[i++] = (int *)malloc(sizeof(int) * (data->width + 1));
+      data->a_matrix[i++] = (int *)ft_memalloc(sizeof(int) * (data->width)); /* +1 removed*/
     fd = open(filename, O_RDONLY);
     i = 0;
     while (get_next_line(fd, &line))

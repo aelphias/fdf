@@ -3,38 +3,46 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strlcat.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aelphias <aelphias@student.42.fr>          +#+  +:+       +#+        */
+/*   By: eleanna <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/09/25 23:28:51 by aelphias          #+#    #+#             */
-/*   Updated: 2019/09/26 13:35:36 by aelphias         ###   ########.fr       */
+/*   Created: 2019/09/07 15:08:40 by eleanna           #+#    #+#             */
+/*   Updated: 2019/09/14 23:15:02 by eleanna          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-size_t	ft_strlcat(char *dst, const char *src, size_t size)
+static void	set_n_d(char **d, size_t *n)
 {
-	size_t len_dst;
-	size_t len_src;
-	size_t i;
-	size_t b;
-
-	len_dst = ft_strlen(dst);
-	len_src = ft_strlen(src);
-	i = 0;
-	b = len_dst + len_src;
-	if (!src)
-		return (len_src);
-	if (size > len_dst)
+	while ((*n) != 0 && (**d) != 0)
 	{
-		while (src[i] && len_dst < size - 1)
-		{
-			dst[len_dst] = src[i];
-			i++;
-			len_dst++;
-		}
-		dst[len_dst] = '\0';
-		return (b);
+		*n = (*n) - 1;
+		*d = (*d) + 1;
 	}
-	return (size + len_src);
+}
+
+size_t		ft_strlcat(char *dest, const char *src, size_t n)
+{
+	char		*d;
+	const char	*s;
+	size_t		d_l;
+
+	d = dest;
+	s = src;
+	set_n_d(&d, &n);
+	d_l = d - dest;
+	if (n == 0)
+		return (d_l + ft_strlen(src));
+	while (*s != 0)
+	{
+		if (n != 1)
+		{
+			*d = *s;
+			d++;
+			n--;
+		}
+		s++;
+	}
+	*d = 0;
+	return (d_l + (s - src));
 }

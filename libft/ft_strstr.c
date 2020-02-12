@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strstr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aelphias <aelphias@student.42.fr>          +#+  +:+       +#+        */
+/*   By: acarole <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/09/26 16:37:10 by aelphias          #+#    #+#             */
-/*   Updated: 2019/09/28 15:28:22 by aelphias         ###   ########.fr       */
+/*   Created: 2019/09/14 15:53:29 by acarole           #+#    #+#             */
+/*   Updated: 2019/09/18 15:32:47 by acarole          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,18 @@
 
 char	*ft_strstr(const char *haystack, const char *needle)
 {
-	int		size_m;
-	int		i;
-	int		size_b;
+	char	*str;
+	size_t	len;
 
-	i = 0;
-	if (needle[0] == '\0')
-		return ((char *)haystack);
-	size_m = ft_strlen(needle);
-	size_b = ft_strlen(haystack);
-	while (ft_strncmp(&haystack[i], needle, size_m) && (i <= (size_b - size_m)))
-		i++;
-	if ((i <= (size_b - size_m)))
-		return ((char *)&haystack[i]);
+	len = ft_strlen(needle);
+	str = (char*)haystack;
+	if (!*needle)
+		return (str);
+	while (*str)
+	{
+		if (!ft_memcmp(str, needle, len))
+			return (str);
+		str++;
+	}
 	return (NULL);
 }

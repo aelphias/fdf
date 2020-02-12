@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_bzero.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aelphias <aelphias@student.42.fr>          +#+  +:+       +#+        */
+/*   By: acarole <acarole@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/09/23 17:45:55 by aelphias          #+#    #+#             */
-/*   Updated: 2019/10/13 15:39:32 by aelphias         ###   ########.fr       */
+/*   Created: 2019/09/14 15:31:17 by acarole           #+#    #+#             */
+/*   Updated: 2020/02/09 18:11:31 by acarole          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,12 @@
 
 void	ft_bzero(void *s, size_t n)
 {
-	char	*ptr;
-	size_t	i;
+	unsigned char *ptr;
 
-	if (!s || n == 0)
-		return ;
-	i = 0;
-	ptr = (char *)s;
-	while (i < n)
+	ptr = (unsigned char *)s;
+	while (n)
 	{
-		ptr[i] = '\0';
-		i++;
+		*ptr++ = '\0';
+		n--;
 	}
 }

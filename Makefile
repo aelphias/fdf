@@ -3,51 +3,39 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: aelphias <aelphias@student.42.fr>          +#+  +:+       +#+         #
+#    By: acarole <acarole@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2019/12/10 13:58:56 by aelphias          #+#    #+#              #
-#    Updated: 2020/02/04 17:04:21 by aelphias         ###   ########.fr        #
+#    Created: 2019/11/06 20:22:27 by eleanna           #+#    #+#              #
+#    Updated: 2020/02/12 23:27:29 by acarole          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-.PHONY: all clean fclean re lib
+FRAMEWORKS= -lmlx -framework OpenGL -framework AppKit
+FLAGS= -Wextra -Wall -Werror -I.
+NAME=fdf
+SRC=src/main.c src/check_input.c src/draw.c src/read_file.c src/bonuses.c src/functions.c src/print_menu.c
+INCLUDES=libft/libft.a
 
-NAME =			fdf
+# COLORS
 
-SRC =			main.c
+BLUE = \033[3;34m
+GREEN = \033[5;32m
+RESET = \033[0m
 
-OBJ =			$(SRC:.c=.o)
+all:
+	@make -C libft/ all
+	@gcc $(SRC) -o $(NAME) $(FLAGS) $(INCLUDES) $(FRAMEWORKS)
+	@echo "\n$(NAME): $(GREEN)object files were created$(RESET)"
+	@echo "$(NAME): $(GREEN)$(NAME) was created$(RESET)"
+clean:
+	@make -C libft/ clean
+	@echo "$(NAME): $(BLUE)$(OBJECTS_DIRECTORY) was deleted$(RESET)"
+	@echo "$(NAME): $(BLUE)object files were deleted$(RESET)"
 
-FT_LIB =		libft/libft.a minilibx_macos/libmlx.a
+fclean: clean
+	@/bin/rm -f $(NAME)
+	@make -C libft/ fclean
 
-FT_PRINT =		ft_printf/libftprintf.a
+re: fclean all
 
-CFLAGS =		-Wall -Wextra -Werror -g
-
-all:			$(NAME)
-
-%.o:			%.c
-				gcc -g -I ./libft -I ./ft_printf -o $@ -c $<
-
-$(NAME):		$(FT_LIB) $(FT_PRINT) $(OBJ) libft/libft.a ft_printf/libftprintf.a
-				gcc  -o $(NAME) $(OBJ) -L ./libft -lft -L ./ft_printf -lftprintf
-
-FORCE:			;
-
-$(FT_LIB):		FORCE
-				make -C ./libft
-
-$(FT_PRINT):	FORCE
-				make -C ./ft_printf
-
-clean:		
-				/bin/rm -f $(OBJ)
-				make clean -C ./libft
-				make clean -C ./ft_printf
-
-fclean: 		clean
-				make fclean -C ./libft
-				make fclean -C ./ft_printf
-				/bin/rm -f $(NAME)
-				
-re:				fclean all
+.PHONY: all clean fclean re

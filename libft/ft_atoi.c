@@ -3,37 +3,46 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aelphias <aelphias@student.42.fr>          +#+  +:+       +#+        */
+/*   By: acarole <acarole@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/09/27 21:19:23 by aelphias          #+#    #+#             */
-/*   Updated: 2019/10/21 16:12:05 by aelphias         ###   ########.fr       */
+/*   Created: 2019/09/14 15:29:34 by acarole           #+#    #+#             */
+/*   Updated: 2020/02/09 21:52:43 by acarole          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_atoi(const char *str)
+short int	ft_whitespace(char c)
 {
-	long long	rs;
-	int			negative;
+	return (c == '\n' || c == '\t' || c == ' '
+			|| c == '\v' || c == '\r' || c == '\f');
+}
 
-	negative = 1;
-	rs = 0;
-	while (*str && (*str == ' ' || *str == '\n' || *str == '\t' ||
-					*str == '\v' || *str == '\f' || *str == '\r'))
-		++str;
-	if (*str == '-')
-		negative = -1;
-	if (*str == '-' || *str == '+')
-		++str;
-	while (*str && *str >= '0' && *str <= '9')
+int			ft_atoi(const char *ptr)
+{
+	size_t	i;
+	size_t	fl;
+	size_t	count;
+
+	i = 0;
+	fl = 0;
+	count = 0;
+	while (ft_whitespace(ptr[i]))
+		i++;
+	if (ptr[i] == '-')
 	{
-		rs = rs * 10 + (*str - 48);
-		++str;
-		if (rs < 0 && negative > 0)
-			return (-1);
-		if (rs < 0 && negative < 0)
-			return (0);
+		fl = 1;
+		i++;
 	}
-	return (rs * negative);
+	else if (ptr[i] == '+')
+		i++;
+	while (ptr[i] >= '0' && ptr[i] <= '9')
+	{
+		count = count * 10 + ptr[i] - '0';
+		i++;
+	}
+	if (fl)
+		return ((-1) * count);
+	else
+		return (count);
 }

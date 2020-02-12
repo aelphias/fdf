@@ -3,36 +3,31 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memccpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aelphias <aelphias@student.42.fr>          +#+  +:+       +#+        */
+/*   By: acarole <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/09/25 17:35:17 by aelphias          #+#    #+#             */
-/*   Updated: 2019/09/29 20:38:35 by aelphias         ###   ########.fr       */
+/*   Created: 2019/09/14 21:54:10 by acarole           #+#    #+#             */
+/*   Updated: 2019/09/14 21:54:13 by acarole          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	*ft_memccpy(void *dst, const void *src, int c, size_t n)
+void	*ft_memccpy(void *dest, const void *src, int c, size_t count)
 {
-	size_t				i;
-	unsigned char		*ptr_dst;
-	unsigned char		*ptr_src;
-	unsigned char		cc;
+	const unsigned char		*srcc;
+	unsigned char			*destc;
+	size_t					i;
 
-	ptr_dst = (unsigned char *)dst;
-	ptr_src = (unsigned char *)src;
-	cc = (unsigned char)c;
+	srcc = (unsigned char *)src;
+	destc = (unsigned char *)dest;
 	i = 0;
-	if (!dst && !src)
-		return (NULL);
-	while (i < n)
+	while (i < count)
 	{
-		if (ptr_src[i] == cc)
-		{
-			ptr_dst[i] = ptr_src[i];
-			return (&ptr_dst[i + 1]);
-		}
-		ptr_dst[i] = ptr_src[i];
+		*destc = *srcc;
+		if (*srcc == (unsigned char)c)
+			return (dest + i + 1);
+		srcc++;
+		destc++;
 		i++;
 	}
 	return (NULL);

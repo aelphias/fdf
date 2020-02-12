@@ -3,44 +3,58 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aelphias <aelphias@student.42.fr>          +#+  +:+       +#+        */
+/*   By: acarole <acarole@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/09/29 17:26:31 by aelphias          #+#    #+#             */
-/*   Updated: 2019/10/21 16:12:05 by aelphias         ###   ########.fr       */
+/*   Created: 2019/09/14 15:32:46 by acarole           #+#    #+#             */
+/*   Updated: 2020/02/09 17:07:54 by acarole          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+#include <stdlib.h>
 
-static	int	num_size(int nb)
+static void		ft_check(int *num, int n, char **ptr)
 {
-	int	sz;
-
-	sz = 1;
-	while (nb /= 10)
-		++sz;
-	return (sz);
+	if (*num < 0)
+		*ptr[0] = '-';
+	if (!n)
+		**ptr = '0';
 }
 
-char		*ft_itoa(int n)
+static size_t	ft_iteration(int num, int count)
 {
-	char				*s;
-	int					sz;
-	unsigned	int		buf;
-
-	sz = num_size(n);
-	buf = n;
-	if (n < 0)
+	while (num)
 	{
-		buf = -n;
-		sz++;
+		num /= 10;
+		count++;
 	}
-	if (!(s = ft_strnew(sz)))
-		return (NULL);
-	s[--sz] = buf % 10 + '0';
-	while (buf /= 10)
-		s[--sz] = buf % 10 + '0';
-	if (n < 0)
-		*(s + 0) = '-';
-	return (s);
+	return (count);
+}
+
+char			*ft_itoa(int n)
+{
+	char	*ptr;
+	size_t	count;
+	int		num;
+
+	num = n;
+	count = 0;
+	count = ft_iteration(num, count);
+	num = n;
+	if (num <= 0)
+		count++;
+	ptr = (char *)ft_memalloc(sizeof(*ptr) * (count + 1));
+	if (ptr)
+	{
+		ft_bzero(ptr, count + 1);
+		ft_check(&num, n, &ptr);
+		while (n)
+		{
+			ptr[count - 1] = (ft_abs(n % 10) + '0');
+			count--;
+			n /= 10;
+		}
+		return (ptr);
+	}
+	return (NULL);
 }

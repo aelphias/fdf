@@ -3,74 +3,135 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aelphias <aelphias@student.42.fr>          +#+  +:+       +#+        */
+/*   By: acarole <acarole@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/09/30 14:25:00 by aelphias          #+#    #+#             */
-/*   Updated: 2020/02/01 18:59:25 by aelphias         ###   ########.fr       */
+/*   Created: 2019/09/22 17:10:46 by acarole           #+#    #+#             */
+/*   Updated: 2020/02/09 17:03:47 by acarole          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "get_next_line.h"
 
-int	ft_check(char **line, int fd, char **left)
+t_lst	*ft_old_fd(t_lst *lst, const int fd, t_lst **list2)
 {
-	char *pos;
-	char *tmp;
+	t_lst	*tmp;
+	char	*ptr;
 
-	if (!(pos = ft_strchr(left[fd], '\n')))
-		return (0);
-	tmp = left[fd];
-	*pos = '\0';
-	*line = ft_strdup(tmp);
-	pos++;
-	if (*pos == '\0')
+	tmp = lst;
+	while (tmp)
 	{
-		ft_strdel(&left[fd]);
-		return (1);
+		if (tmp->fd == fd)
+		{
+			ptr = ft_strdup(tmp->str);
+			free(tmp->str);
+			tmp->str = ft_strjoin(ptr, (*list2)->str);
+			free(ptr);
+			free((*list2)->str);
+			free(*list2);
+			return (lst);
+		}
+		if (tmp->next)
+			tmp = tmp->next;
+		else
+		{
+			tmp->next = (*list2);
+			return (lst);
+		}
 	}
-	left[fd] = ft_strdup(pos);
-	ft_strdel(&tmp);
+	return (lst);
+}
+
+t_lst	*ft_createlst(t_lst *lst, const int fd, char *buf)
+{
+	t_lst	*list2;
+
+	list2 = (t_lst *)ft_memalloc(sizeof(t_lst));
+	list2->str = ft_strdup(buf);
+	list2->fd = fd;
+	list2->next = NULL;
+	if (!lst)
+		lst = list2;
+	else
+		lst = ft_old_fd(lst, fd, &list2);
+	return (lst);
+}
+
+void	ft_dell(t_lst **list2, t_lst **list)
+{
+	t_lst	*list3;
+
+	list3 = (*list);
+	if ((*list2)->str[0] == 0)
+	{
+		if (list3 == *list2)
+		{
+			*list = (*list2)->next;
+			free((*list2)->str);
+			free(*list2);
+			return ;
+		}
+		while (list3->next != (*list2))
+			list3 = list3->next;
+		list3->next = (*list2)->next;
+		free((*list2)->str);
+		free(*list2);
+	}
+}
+
+int		ft_checks(t_lst **list2, char **line, int re, t_lst **list)
+{
+	int		i;
+	char	*ptr;
+
+	i = 0;
+	if (re == 0 && !(*list2))
+		return (0);
+	while ((*list2)->str[i] != '\n' && (*list2)->str[i])
+		i++;
+	if (i == 0 && (*list2)->str[i] == 0)
+		return (0);
+	if (!(*line = ft_strsub((*list2)->str, 0, i)))
+		return (-1);
+	if (i > 0 && (*list2)->str[i] == 0)
+	{
+		ptr = ft_strdup("");
+		free((*list2)->str);
+	}
+	else
+	{
+		ptr = ft_strdup(ft_strchr((*list2)->str, '\n') + 1);
+		free((*list2)->str);
+	}
+	(*list2)->str = ptr;
+	ft_dell(list2, list);
 	return (1);
 }
 
-int	ft_read_line(char **line, int fd, char **left)
+int		get_next_line(const int fd, char **line)
 {
-	int			ret;
-	char		b[BUFF_SIZE + 1];
-	char		*tmp;
+	int				re;
+	static	t_lst	*list;
+	t_lst			*list2;
+	char			buf[BUFF_SIZE + 1];
 
-	while ((ret = read(fd, b, BUFF_SIZE)))
-	{
-		b[ret] = '\0';
-		if (!left[fd])
-			left[fd] = ft_strdup(b);
-		else
-		{
-			tmp = left[fd];
-			left[fd] = ft_strjoin(tmp, b);
-			ft_strdel(&tmp);
-		}
-		if (ft_check(line, fd, left))
-			return (1);
-	}
-	return (0);
-}
-
-int	get_next_line(const int fd, char **line)
-{
-	static char *left[11000];
-
-	if (!line || fd < 0 || fd > 11000 || read(fd, NULL, 0) < 0)
+	re = 0;
+	if (fd < 0 || line == NULL)
 		return (-1);
-	if (left[fd] && ft_strchr(left[fd], '\n'))
-		return (ft_check(line, fd, left));
-	if (ft_read_line(line, fd, left))
-		return (1);
-	if (left[fd])
-	{
-		*line = ft_strdup(left[fd]);
-		ft_strdel(&(left[fd]));
-		return (1);
-	}
-	return (0);
+	list2 = list;
+	while (list2 && list2->fd != fd)
+		list2 = list2->next;
+	if (!list2 || !(list2->fd == fd) || !(ft_strchr(list2->str, '\n')))
+		while ((re = read(fd, buf, BUFF_SIZE)))
+		{
+			if (re == -1)
+				return (-1);
+			buf[re] = 0;
+			list = ft_createlst(list, fd, buf);
+			if (ft_strchr(buf, '\n'))
+				break ;
+		}
+	list2 = list;
+	while (list2 && list2->fd != fd)
+		list2 = list2->next;
+	return (ft_checks(&list2, line, re, &list));
 }

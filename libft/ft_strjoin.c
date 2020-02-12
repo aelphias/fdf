@@ -3,24 +3,38 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aelphias <aelphias@student.42.fr>          +#+  +:+       +#+        */
+/*   By: acarole <acarole@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/09/29 12:58:15 by aelphias          #+#    #+#             */
-/*   Updated: 2019/09/29 13:20:11 by aelphias         ###   ########.fr       */
+/*   Created: 2019/09/14 15:48:53 by acarole           #+#    #+#             */
+/*   Updated: 2020/02/09 17:03:44 by acarole          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+#include <stdlib.h>
 
 char	*ft_strjoin(char const *s1, char const *s2)
 {
-	char	*rslt;
+	char			*str;
+	unsigned int	i;
+	unsigned int	j;
 
-	if (s1 == NULL || s2 == NULL)
+	j = 0;
+	i = 0;
+	if (!s1 || !s2)
 		return (NULL);
-	if (!(rslt = ft_strnew(ft_strlen(s1) + ft_strlen(s2))))
-		return (NULL);
-	ft_strcpy(rslt, s1);
-	ft_strcat(rslt, s2);
-	return (rslt);
+	str = (char *)ft_memalloc(ft_strlen(s1) + ft_strlen(s2) + 1);
+	if (str)
+	{
+		while (s1[i])
+		{
+			str[i] = s1[i];
+			i++;
+		}
+		while (s2[j])
+			str[i++] = s2[j++];
+		str[i] = 0;
+		return (str);
+	}
+	return (NULL);
 }

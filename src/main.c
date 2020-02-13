@@ -16,7 +16,6 @@ int		ft_exit(t_fdf *data)
 {
 	mlx_destroy_window(data->mlx_ptr, data->win_ptr);
 	exit(0);
-	return (0);
 }
 
 int		deal_mouse(int mouse, int x, int y, t_fdf *data)

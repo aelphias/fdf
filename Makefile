@@ -3,34 +3,60 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: acarole <acarole@student.42.fr>            +#+  +:+       +#+         #
+#    By: aelphias <aelphias@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/06 20:22:27 by eleanna           #+#    #+#              #
-#    Updated: 2020/02/12 23:27:29 by acarole          ###   ########.fr        #
+#    Updated: 2020/02/13 22:41:44 by aelphias         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-FRAMEWORKS= -lmlx -framework OpenGL -framework AppKit
-FLAGS= -Wextra -Wall -Werror -I.
-NAME=fdf
-SRC=src/main.c src/check_input.c src/draw.c src/read_file.c src/bonuses.c src/functions.c src/print_menu.c
-INCLUDES=libft/libft.a
+
+FRAMEWORKS	=	-lmlx -framework OpenGL -framework AppKit
+
+FLAGS		=	-Wextra -Wall -Werror
+
+NAME		=	fdf
+
+SRC			=	src/main.c src/check_input.c src/draw.c src/read_file.c \
+				src/bonuses.c	src/functions.c src/print_menu.c
+			
+FT_LIB		=	./libft/libft.a
+
+LIBFT_PATH = ./libft
+
+OBJ			=	$(SRC:.c=.o)
+
+INC			=	./includes/fdf.h
+
+INCLUDES_PATH = ./includes
+
+CC			=	gcc
 
 # COLORS
 
-BLUE = \033[3;34m
-GREEN = \033[5;32m
+RED = \033[0;91m
+GREEN = \033[0;92m
 RESET = \033[0m
 
-all:
-	@make -C libft/ all
-	@gcc $(SRC) -o $(NAME) $(FLAGS) $(INCLUDES) $(FRAMEWORKS)
-	@echo "\n$(NAME): $(GREEN)object files were created$(RESET)"
-	@echo "$(NAME): $(GREEN)$(NAME) was created$(RESET)"
+all: $(NAME)
+	
+$(NAME): $(FT_LIB) $(OBJ)
+	$(CC) $(FRAMEWORKS) $(FLAGS) -I ./includes -I $(LIBFT_PATH) $(SRC) -L ./libft -lft -o $(NAME)
+	@echo "\n$(GREEN)object files were created$(RESET)"
+	@echo "$(GREEN)$(NAME) executable file was created$(RESET)"
+
+
+%.o: %.c $(INC)
+	$(CC) $(FLAGS) -o $@ -c $< -I ./includes -I ./libft
+	
+$(FT_LIB): force
+	make -C ./libft
+
 clean:
 	@make -C libft/ clean
-	@echo "$(NAME): $(BLUE)$(OBJECTS_DIRECTORY) was deleted$(RESET)"
-	@echo "$(NAME): $(BLUE)object files were deleted$(RESET)"
+	@/bin/rm -f src/$(OBJ)
+	@echo "$(NAME): $(RED)$(OBJECTS_DIRECTORY)executable file was deleted$(RESET)"
+	@echo "$(NAME): $(RED)object files were deleted$(RESET)"
 
 fclean: clean
 	@/bin/rm -f $(NAME)
@@ -38,4 +64,4 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all clean fclean re
+.PHONY: all clean fclean re force

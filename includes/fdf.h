@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fdf.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acarole <acarole@student.42.fr>            +#+  +:+       +#+        */
+/*   By: aelphias <aelphias@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 15:11:05 by aelphias          #+#    #+#             */
-/*   Updated: 2020/02/12 20:47:03 by acarole          ###   ########.fr       */
+/*   Updated: 2020/02/13 16:09:35 by aelphias         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 # include <math.h>
 # include <mlx.h>
-# include "libft/libft.h"
+# include "libft.h"
 # include <stdlib.h>
 # include <fcntl.h>
 

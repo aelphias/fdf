@@ -6,7 +6,7 @@
 /*   By: aelphias <aelphias@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/14 16:08:06 by acarole           #+#    #+#             */
-/*   Updated: 2020/02/06 15:29:53 by aelphias         ###   ########.fr       */
+/*   Updated: 2020/02/13 20:36:18 by aelphias         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include <string.h>
 # include <unistd.h>
+# include <stdlib.h>
 
 typedef struct		s_list
 {
@@ -22,7 +23,6 @@ typedef struct		s_list
 	size_t			content_size;
 	struct s_list	*next;
 }					t_list;
-int					get_next_line(int fd, char **line);
 t_list				*ft_lstmap(t_list *lst, t_list *(*f)(t_list *elem));
 short int			ft_islower(int c);
 short int			ft_isupper(int c);
@@ -95,5 +95,16 @@ char				*ft_strtrim(char const *s);
 void				set_bit(int *num, short int tetrim);
 int					check_bit(int num, short int tetrim);
 void				clear_bit(int *num, short int tetrim);
+
+# define BUFF_SIZE 50
+
+typedef struct		s_lst
+{
+	struct s_lst	*next;
+	char			*str;
+	int				fd;
+}					t_lst;
+
+int					get_next_line(const int fd, char **line);
 
 #endif

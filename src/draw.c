@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aelphias <aelphias@student.42.fr>          +#+  +:+       +#+        */
+/*   By: acarole <acarole@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/02 15:22:43 by acarole           #+#    #+#             */
-/*   Updated: 2020/02/13 16:12:10 by aelphias         ###   ########.fr       */
+/*   Updated: 2020/02/16 17:43:57 by acarole          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,9 @@ void	set_default(t_fdf *data)
 	int x;
 	int y;
 
+	data->rotation_y = 0;
+	data->rotation_x = 0;
+	data->rotation_z = 0;
 	data->z = 1;
 	data->angle = 0.82;
 	x = 1500;
@@ -65,7 +68,7 @@ void	bresenham(t_line line, t_fdf *data)
 	while ((int)(line.x - line.x1) || (int)(line.y - line.y1))
 	{
 		if (z1 || z)
-			data->color = get_light(ft_color(data), 0xBBBBBB, 0.1);
+			data->color = get_light(ft_color(data), 0xBBBBBB, 0.2);
 		else
 			data->color = ft_color(data);
 		mlx_pixel_put(data->mlx_ptr, data->win_ptr, line.x,

@@ -6,19 +6,19 @@
 #    By: aelphias <aelphias@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/06 20:22:27 by eleanna           #+#    #+#              #
-#    Updated: 2020/02/13 22:41:44 by aelphias         ###   ########.fr        #
+#    Updated: 2020/02/16 22:07:04 by aelphias         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 
 FRAMEWORKS	=	-lmlx -framework OpenGL -framework AppKit
 
-FLAGS		=	-Wextra -Wall -Werror
+FLAGS		=	-Wextra -Wall
 
 NAME		=	fdf
 
 SRC			=	src/main.c src/check_input.c src/draw.c src/read_file.c \
-				src/bonuses.c	src/functions.c src/print_menu.c
+				src/bonuses.c	src/functions.c src/print_menu.c src/keys_n_mouse.c
 			
 FT_LIB		=	./libft/libft.a
 
@@ -53,6 +53,7 @@ $(FT_LIB): force
 	make -C ./libft
 
 clean:
+	@/bin/rm -rf src/main.o
 	@make -C libft/ clean
 	@/bin/rm -f src/$(OBJ)
 	@echo "$(NAME): $(RED)$(OBJECTS_DIRECTORY)executable file was deleted$(RESET)"

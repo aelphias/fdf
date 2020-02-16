@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_bit.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aelphias <aelphias@student.42.fr>          +#+  +:+       +#+        */
+/*   By: acarole <acarole@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/02 20:26:41 by eleanna           #+#    #+#             */
-/*   Updated: 2020/02/13 21:02:42 by aelphias         ###   ########.fr       */
+/*   Updated: 2019/11/24 23:44:46 by acarole          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,5 @@
 
 int		check_bit(int num, short int tetrim)
 {
-
-
-	
 	return (num & 1 << tetrim);
 }

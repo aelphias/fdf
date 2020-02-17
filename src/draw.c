@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acarole <acarole@student.42.fr>            +#+  +:+       +#+        */
+/*   By: aelphias <aelphias@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/02 15:22:43 by acarole           #+#    #+#             */
-/*   Updated: 2020/02/16 17:43:57 by acarole          ###   ########.fr       */
+/*   Updated: 2020/02/17 16:14:41 by aelphias         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	set_default(t_fdf *data)
 	data->diff_iso = 1;
 	data->mlx_ptr = mlx_init();
 	data->win_ptr = mlx_new_window(data->mlx_ptr, x, y, "FdF");
-	data->color_new = 0x0f6fa3;
+	data->color_new = 0x0f6fa4;
 	draw(data);
 }
 

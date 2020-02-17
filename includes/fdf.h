@@ -6,16 +6,16 @@
 /*   By: aelphias <aelphias@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 15:11:05 by aelphias          #+#    #+#             */
-/*   Updated: 2020/02/16 22:07:04 by aelphias         ###   ########.fr       */
+/*   Updated: 2020/02/17 16:10:06 by aelphias         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FDF_H
 # define FDF_H
 
+# include "libft.h"
 # include <math.h>
 # include <mlx.h>
-# include "libft.h"
 # include <stdlib.h>
 # include <fcntl.h>
 
@@ -48,24 +48,27 @@ typedef	struct	s_line
 	float y1;
 }				t_line;
 
+int				ft_wdcounter(char const *str, char c);
+int				ft_color(t_fdf *data);
+int				get_light(int start, int end, double percentage);
+int				ft_exit(t_fdf *data);
+int				deal_mouse(int mouse, int x, int y, t_fdf *data);
+int				deal_key(int key, t_fdf *data);
 void			set_default(t_fdf *param);
 void			read_file(char *file_name, t_fdf *data);
-int				ft_wdcounter(char const *str, char c);
 void			bresenham(t_line line, t_fdf *data);
 void			draw(t_fdf *data);
 void			check_input(int argc, char **argv);
 void			print_menu(t_fdf *data);
 void			ft_memdel1(char **mem);
 void			ft_memdel3(int **mem);
-int				ft_color(t_fdf *data);
-int				get_light(int start, int end, double percentage);
 void			isometric(float *x, float *y, int z, t_fdf *data);
 void			check_iso(t_fdf *data, int *z, int *z1, t_line *line);
 void			zoom(t_line *line, t_fdf *data);
-int				ft_exit(t_fdf *data);
-int				deal_mouse(int mouse, int x, int y, t_fdf *data);
 void			deal_key_move(int key, t_fdf *data);
 void			deal_key2(int key, t_fdf *data);
-int				deal_key(int key, t_fdf *data);
+void			rotate_x(float *x, int z, t_fdf *data);
+void			rotate_y(float *y, int z, t_fdf *data);
+void			rotate_z(float *x, float *y, t_fdf *data);
 
 #endif

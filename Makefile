@@ -6,7 +6,7 @@
 #    By: aelphias <aelphias@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/06 20:22:27 by eleanna           #+#    #+#              #
-#    Updated: 2020/02/16 22:07:04 by aelphias         ###   ########.fr        #
+#    Updated: 2020/02/17 16:13:41 by aelphias         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,8 @@ FLAGS		=	-Wextra -Wall
 NAME		=	fdf
 
 SRC			=	src/main.c src/check_input.c src/draw.c src/read_file.c \
-				src/bonuses.c	src/functions.c src/print_menu.c src/keys_n_mouse.c
+				src/bonuses.c	src/functions.c src/print_menu.c \
+				src/keys_n_mouse.c src/rotation.c
 			
 FT_LIB		=	./libft/libft.a
 

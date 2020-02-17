@@ -3,14 +3,45 @@
 /*                                                        :::      ::::::::   */
 /*   check_input.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: acarole <acarole@student.42.fr>            +#+  +:+       +#+        */
+/*   By: aelphias <aelphias@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 15:10:00 by aelphias          #+#    #+#             */
-/*   Updated: 2020/02/16 11:44:34 by acarole          ###   ########.fr       */
+/*   Updated: 2020/02/17 18:06:56 by aelphias         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
+#include <stdio.h>
+
+void	check_symbols(char **argv)
+{
+	char	*line;
+	int		fd;
+	int i;
+	
+	i = 0;
+	fd = open(argv[1], O_RDONLY, 0);
+	while (get_next_line(fd, &line) == 1)
+	{
+		printf("%s\n", line);
+		while (line[i])
+		{
+			// if (!((line[i] >= '0' && line[i] <= '9') ||
+			// (line[i] >= 'A' && line[i] <= 'F') ||
+			// (line[i] == 'x') || (line[i] == ' ')))
+			{
+				printf("something wrong happend\n");
+				write(1, "invalid file\n", 14);
+				free(line); // rec com
+				close(fd); // rec com
+				exit(-4);
+			}
+			i++;
+		}	
+		free(line);
+	}
+	close(fd);
+}
 
 void	check_width(char **argv)
 {
@@ -59,4 +90,6 @@ void	check_input(int argc, char **argv)
 		close(fd);
 	}
 	check_width(argv);
+	check_symbols(argv);
 }
+
